@@ -1,0 +1,835 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>منصة الخدمات السعودية | خدمات عامة وإلكترونية وأبشر في المملكة</title>
+<meta name="description" content="اطلب خدمات عامة وإلكترونية وخدمات منصة أبشر في جميع مناطق المملكة العربية السعودية بسهولة وسرعة. تنظيف، صيانة، نقل عفش، دفع فواتير، تجديد إقامات، مخالفات مرورية، أحوال مدنية وغيرها.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Cairo:wght@300;400;600;700;800&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+<script src="https://cdn.tailwindcss.com"></script>
+<!-- EmailJS library for sending emails from static HTML -->
+<script type="text/javascript" src="https://cdn.emailjs.com/dist/email.min.js"></script>
+<style>
+  :root {
+    --green-dark: #053b2b;
+    --green-mid: #065f46;
+    --green-light: #10b981;
+    --gold: #d4af37;
+    --gold-light: #fcd34d;
+    --text-dark: #f1f5f9;
+    --text-muted: #94a3b8;
+  }
+
+  html { scroll-behavior: smooth; }
+
+  body {
+    font-family: 'Cairo', sans-serif;
+    background-color: var(--green-dark);
+    color: var(--text-dark);
+    direction: rtl;
+    overflow-x: hidden;
+  }
+
+  /* Islamic geometric background pattern */
+  .bg-pattern {
+    position: fixed;
+    inset: 0;
+    z-index: -1;
+    background-image:
+      radial-gradient(circle at 25% 25%, rgba(16, 185, 129, 0.08) 0%, transparent 40%),
+      radial-gradient(circle at 75% 75%, rgba(212, 175, 55, 0.06) 0%, transparent 40%),
+      linear-gradient(135deg, #042f21 0%, #065f46 50%, #042f21 100%);
+    background-size: cover;
+  }
+
+  .bg-pattern::before {
+    content: "";
+    position: absolute;
+    inset: 0;
+    opacity: 0.15;
+    background-image: url("data:image/svg+xml,%3Csvg width='60' height='60' viewBox='0 0 60 60' xmlns='http://www.w3.org/2000/svg'%3E%3Cg fill='none' fill-rule='evenodd'%3E%3Cg fill='%2310b981' fill-opacity='0.04'%3E%3Cpath d='M36 34v-4h-2v4h-4v2h4v4h2v-4h4v-2h-4zm0-30V0h-2v4h-4v2h4v4h2V6h4V4h-4zM6 34v-4H4v4H0v2h4v4h2v-4h4v-2H6zM6 4V0H4v4H0v2h4v4h2V6h4V4H6z'/%3E%3C/g%3E%3C/g%3E%3C/svg%3E");
+  }
+
+  .glass {
+    background: rgba(255, 255, 255, 0.05);
+    backdrop-filter: blur(12px);
+    border: 1px solid rgba(255, 255, 255, 0.1);
+    box-shadow: 0 8px 32px 0 rgba(0, 0, 0, 0.37);
+  }
+
+  .gold-text {
+    background: linear-gradient(135deg, #fcd34d 0%, #d4af37 100%);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+  }
+
+  .btn-primary {
+    background: linear-gradient(135deg, var(--gold) 0%, #b8860b 100%);
+    color: #0b2115;
+    border-radius: 14px;
+    padding: 14px 28px;
+    font-weight: 800;
+    transition: transform .2s, box-shadow .2s, filter .2s;
+    box-shadow: 0 4px 14px rgba(212, 175, 55, 0.4);
+    border: none;
+    cursor: pointer;
+  }
+
+  .btn-primary:hover {
+    transform: translateY(-2px);
+    filter: brightness(1.15);
+    box-shadow: 0 8px 24px rgba(212, 175, 55, 0.55);
+    color: #0b2115;
+  }
+
+  .btn-primary:active {
+    transform: translateY(0);
+  }
+
+  .btn-outline {
+    background: rgba(255, 255, 255, 0.05);
+    border: 1px solid rgba(255, 255, 255, 0.2);
+    color: #fff;
+    border-radius: 14px;
+    padding: 14px 28px;
+    font-weight: 700;
+    transition: all .2s;
+    cursor: pointer;
+  }
+
+  .btn-outline:hover {
+    background: rgba(255, 255, 255, 0.12);
+    border-color: rgba(212, 175, 55, 0.5);
+  }
+
+  .card {
+    background: rgba(255, 255, 255, 0.04);
+    border-radius: 20px;
+    overflow: hidden;
+    transition: transform .3s, box-shadow .3s, border-color .3s;
+    border: 1px solid rgba(255, 255, 255, 0.08);
+  }
+
+  .card:hover {
+    transform: translateY(-8px);
+    border-color: rgba(212, 175, 55, 0.4);
+    box-shadow: 0 24px 40px -10px rgba(0, 0, 0, 0.5);
+  }
+
+  .nav-shadow {
+    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.4);
+  }
+
+  .section-title {
+    font-weight: 800;
+    letter-spacing: -0.5px;
+  }
+
+  .badge-gov {
+    background: rgba(212, 175, 55, 0.15);
+    color: var(--gold-light);
+    font-size: 11px;
+    font-weight: 800;
+    padding: 4px 10px;
+    border-radius: 999px;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+    border: 1px solid rgba(212, 175, 55, 0.3);
+  }
+
+  .icon-ring {
+    width: 18px;
+    height: 18px;
+    border-radius: 50%;
+    border: 2px solid var(--gold);
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 10px;
+    font-weight: 800;
+    color: var(--gold);
+    margin-right: 8px;
+  }
+
+  .toast {
+    position: fixed;
+    top: 20px;
+    right: 20px;
+    z-index: 9999;
+    max-width: 420px;
+  }
+
+  @media (max-width: 640px) {
+    .toast { left: 20px; right: 20px; text-align: center; }
+  }
+
+  /* Form elements dark theme */
+  input, select, textarea {
+    background: rgba(255, 255, 255, 0.06);
+    border: 1px solid rgba(255, 255, 255, 0.12);
+    color: #fff;
+    border-radius: 12px;
+  }
+
+  input::placeholder, select::placeholder, textarea::placeholder {
+    color: rgba(255, 255, 255, 0.45);
+  }
+
+  input:focus, select:focus, textarea:focus {
+    outline: none;
+    border-color: var(--gold);
+    ring: 2px solid rgba(212, 175, 55, 0.5);
+  }
+
+  select option {
+    background: #065f46;
+    color: #fff;
+  }
+
+  /* Hero title Arabic */
+  .hero-main {
+    font-size: clamp(3rem, 10vw, 8rem);
+    line-height: 1.1;
+    font-weight: 800;
+  }
+
+  .hero-sub {
+    font-size: clamp(1.5rem, 5vw, 3rem);
+    font-weight: 800;
+  }
+
+  .arabic-heading {
+    font-family: 'Cairo', sans-serif;
+    font-weight: 800;
+  }
+</style>
+</head>
+<body>
+
+<!-- Background pattern -->
+<div class="bg-pattern"></div>
+
+<!-- Navbar -->
+<nav class="fixed top-0 left-0 right-0 z-50 nav-shadow">
+  <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+    <div class="flex items-center justify-between h-20">
+      <div class="flex items-center gap-3">
+        <div class="w-11 h-11 rounded-2xl bg-gradient-to-br from-green-400 to-emerald-600 flex items-center justify-center text-dark shadow-lg ring-2 ring-gold/30">
+          <i class="fa-solid fa-cloud text-xl"></i>
+        </div>
+        <span class="text-xl font-extrabold tracking-tight text-white arabic-heading">منصة الخدمات السعودية</span>
+      </div>
+      <div class="hidden md:flex items-center gap-6 text-sm font-medium text-gray-300">
+        <a href="#home" class="hover:text-gold-400 transition">الرئيسية</a>
+        <a href="#services" class="hover:text-gold-400 transition">الخدمات العامة</a>
+        <a href="#gov" class="hover:text-gold-400 transition">أبشر والحكومة</a>
+        <a href="#order" class="hover:text-gold-400 transition">طلب خدمة</a>
+        <a href="#about" class="hover:text-gold-400 transition">عن المنصة</a>
+        <a href="#contact" class="hover:text-gold-400 transition">تواصل معنا</a>
+      </div>
+      <a href="#order" class="hidden md:inline-block btn-primary">اطلب خدمة الآن</a>
+      <div class="md:hidden flex items-center gap-2">
+        <button class="text-gray-300 hover:text-gold-400" onclick="document.getElementById('mobile-menu').classList.toggle('hidden')">
+          <i class="fa-solid fa-bars text-xl"></i>
+        </button>
+      </div>
+    </div>
+  </div>
+  <div id="mobile-menu" class="hidden md:hidden bg-green-dark/95 border-t border-green-500/20 backdrop-blur-md">
+    <div class="px-4 py-4 space-y-4">
+      <a href="#home" class="block py-2 text-gray-300 hover:text-gold-400">الرئيسية</a>
+      <a href="#services" class="block py-2 text-gray-300 hover:text-gold-400">الخدمات العامة</a>
+      <a href="#gov" class="block py-2 text-gray-300 hover:text-gold-400">أبشر والحكومة</a>
+      <a href="#order" class="block py-2 text-gray-300 hover:text-gold-400">طلب خدمة</a>
+      <a href="#about" class="block py-2 text-gray-300 hover:text-gold-400">عن المنصة</a>
+      <a href="#contact" class="block py-2 text-gray-300 hover:text-gold-400">تواصل معنا</a>
+      <a href="#order" class="block py-3 btn-primary text-center">اطلب خدمة الآن</a>
+    </div>
+  </div>
+</nav>
+
+<!-- Hero -->
+<section id="home" class="relative pt-32 pb-24 lg:pt-48 lg:pb-32 overflow-hidden">
+  <div class="absolute inset-0 -z-10 opacity-30">
+    <div class="top-0 left-0 w-96 h-96 bg-green-500/20 rounded-full blur-[120px] -translate-x-1/2 -translate-y-1/2"></div>
+    <div class="bottom-0 right-0 w-96 h-96 bg-amber-500/20 rounded-full blur-[120px] translate-x-1/2 translate-y-1/2"></div>
+  </div>
+  <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+    <div class="lg:max-w-3xl text-center">
+      <div class="inline-flex items-center gap-2 px-4 py-1.5 rounded-full bg-green-500/10 border border-green-500/30 text-green-400 text-xs font-bold mb-8 backdrop-blur-sm">
+        <i class="fa-solid fa-shield-halved"></i> خدمات معتمدة في المملكة العربية السعودية
+      </div>
+      <h1 class="hero-main text-white mb-6 arabic-heading">
+        خدمات عامة<br><span class="gold-text">للأفراد والمنشآت</span>
+      </h1>
+      <p class="text-lg text-gray-300 mb-10 max-w-xl mx-auto leading-relaxed">
+        اطلب الخدمة التي تحتاجها بسهولة وسرعة عبر منصة إلكترونية موثوقة. خدمات منزلية، حكومية، فواتير، وحجوزات تُنجز لك بأيدي متخصصين، مع إمكانية إتمام معاملات منصة أبشر وخدمات الحكومة الرقمية نيابة عنك.
+      </p>
+      <div class="flex flex-col sm:flex-row items-center justify-center gap-4">
+        <a href="#order" class="btn-primary text-lg px-8 py-4 w-full sm:w-auto">اطلب خدمتك الآن <i class="fa-solid fa-paper-plane ml-2"></i></a>
+        <a href="#gov" class="btn-outline text-lg px-8 py-4 w-full sm:w-auto">خدمات أبشر والحكومة</a>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- Trust stats -->
+<section class="border-y border-green-500/10 py-16 bg-green-dark/40">
+  <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+    <div class="grid grid-cols-2 md:grid-cols-4 gap-8 text-center">
+      <div>
+        <div class="text-2xl font-bold text-gold-400 mb-1">5+</div>
+        <div class="text-xs text-gray-400">مناطق رئيسية</div>
+      </div>
+      <div>
+        <div class="text-2xl font-bold text-gold-400 mb-1">60+</div>
+        <div class="text-xs text-gray-400">خدمة مُقدمة</div>
+      </div>
+      <div>
+        <div class="text-2xl font-bold text-gold-400 mb-1">24/7</div>
+        <div class="text-xs text-gray-400">طلب إلكتروني</div>
+      </div>
+      <div>
+        <div class="text-2xl font-bold text-gold-400 mb-1">ضمان</div>
+        <div class="text-xs text-gray-400">جودة التنفيذ</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- General Services -->
+<section id="services" class="py-24 relative">
+  <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+    <div class="text-center mb-16">
+      <h2 class="text-3xl sm:text-4xl section-title text-white mb-4 arabic-heading">الخدمات العامة</h2>
+      <p class="text-gray-400 max-w-2xl mx-auto">نقدم لك باقة متكاملة من الخدمات العامة التي تلبي احتياجات الأفراد والأسر في جميع مدن المملكة.</p>
+    </div>
+    <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
+      <!-- خدمة 1 -->
+      <div class="card group">
+        <div class="p-6">
+          <div class="w-14 h-14 rounded-2xl bg-green-500/20 flex items-center justify-center text-green-400 mb-5 group-hover:bg-green-500 group-hover:text-white transition-colors">
+            <i class="fa-solid fa-broom text-2xl"></i>
+          </div>
+          <h3 class="text-xl font-bold text-white mb-2">تنظيف المنازل والمكاتب</h3>
+          <p class="text-sm text-gray-400 mb-4">تعقيم وتنظيف شامل للمباني السكنية والتجارية بمواد آمنة ومعدات حديثة.</p>
+          <ul class="text-xs text-gray-500 space-y-1">
+            <li>· تنظيف عميق ودوري</li>
+            <li>· تعقيم وتطهير</li>
+            <li>• جلي وتلميع الأرضيات</li>
+          </ul>
+        </div>
+      </div>
+      <!-- خدمة 2 -->
+      <div class="card group">
+        <div class="p-6">
+          <div class="w-14 h-14 rounded-2xl bg-emerald-500/20 flex items-center justify-center text-emerald-400 mb-5 group-hover:bg-emerald-500 group-hover:text-white transition-colors">
+            <i class="fa-solid fa-tools text-2xl"></i>
+          </div>
+          <h3 class="text-xl font-bold text-white mb-2">صيانة المنازل</h3>
+          <p class="text-sm text-gray-400 mb-4">كهرباء، سباكة، تكييف، وصيانة دورية على يد فنيين معتمدين ومضمونين.</p>
+          <ul class="text-xs text-gray-500 space-y-1">
+            <li>· إصلاح كهربائي وسباكة</li>
+            <li>• صيانة تكييف وتهوية</li>
+            <li>· أعمال الدهانات والتشطيب</li>
+          </ul>
+        </div>
+      </div>
+      <!-- خدمة 3 -->
+      <div class="card group">
+        <div class="p-6">
+          <div class="w-14 h-14 rounded-2xl bg-amber-500/20 flex items-center justify-center text-amber-400 mb-5 group-hover:bg-amber-500 group-hover:text-white transition-colors">
+            <i class="fa-solid fa-truck-fast text-2xl"></i>
+          </div>
+          <h3 class="text-xl font-bold text-white mb-2">نقل العفش والأثاث</h3>
+          <p class="text-sm text-gray-400 mb-4">نقل آمن ومريح للعفش داخل المدن وبين مناطق المملكة مع تغليف وحماية كاملة.</p>
+          <ul class="text-xs text-gray-500 space-y-1">
+            <li>· تغليف أثاث احترافي</li>
+            <li>• نقل داخل وخارج المدن</li>
+            <li>· تركيب وفك الأثاث</li>
+          </ul>
+        </div>
+      </div>
+      <!-- خدمة 4 -->
+      <div class="card group">
+        <div class="p-6">
+          <div class="w-14 h-14 rounded-2xl bg-rose-500/20 flex items-center justify-center text-rose-400 mb-5 group-hover:bg-rose-500 group-hover:text-white transition-colors">
+            <i class="fa-solid fa-bug-slash text-2xl"></i>
+          </div>
+          <h3 class="text-xl font-bold text-white mb-2">مكافحة الحشرات</h3>
+          <p class="text-sm text-gray-400 mb-4">رش مبيدات آمنة معتمدة من البلدية ومكافحة الحشرات والقوارض للمنازل والمنشآت.</p>
+          <ul class="text-xs text-gray-500 space-y-1">
+            <li>· مبيدات آمنة للأطفال والحيوانات</li>
+            <li>• مكافحة النمل والصراصير والبق</li>
+            <li>· متابعة دورية وضمان الخدمة</li>
+          </ul>
+        </div>
+      </div>
+      <!-- خدمة 5 -->
+      <div class="card group">
+        <div class="p-6">
+          <div class="w-14 h-14 rounded-2xl bg-indigo-500/20 flex items-center justify-center text-indigo-400 mb-5 group-hover:bg-indigo-500 group-hover:text-white transition-colors">
+            <i class="fa-solid fa-file-invoice-dollar text-2xl"></i>
+          </div>
+          <h3 class="text-xl font-bold text-white mb-2">دفع الفواتير الحكومية</h3>
+          <p class="text-sm text-gray-400 mb-4">سداد فواتير الكهرباء والماء والاتصالات وغيرها عبر نظام إلكتروني آمن وسريع.</p>
+          <ul class="text-xs text-gray-500 space-y-1">
+            <li>• فواتير الكهرباء والماء</li>
+            <li>· فواتير الاتصالات والإنترنت</li>
+            <li>• رسوم الحكومة والبلديات</li>
+          </ul>
+        </div>
+      </div>
+      <!-- خدمة 6 -->
+      <div class="card group">
+        <div class="p-6">
+          <div class="w-14 h-14 rounded-2xl bg-purple-500/20 flex items-center justify-center text-purple-400 mb-5 group-hover:bg-purple-500 group-hover:text-white transition-colors">
+            <i class="fa-solid fa-id-card text-2xl"></i>
+          </div>
+          <h3 class="text-xl font-bold text-white mb-2">حجوزات وخدمات إلكترونية</h3>
+          <p class="text-sm text-gray-400 mb-4">حجز المواعيد والخدمات الإلكترونية المساندة لأفراد الأسر والأعمال.</p>
+          <ul class="text-xs text-gray-500 space-y-1">
+            <li>· حجز مواعيد حكومية</li>
+            <li>• معاملة إلكترونية سريعة وآمنة</li>
+            <li>· استخراج وتجديد الوثائق</li>
+          </ul>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- Government / Absher Unified Platform Services -->
+<section id="gov" class="py-24 bg-green-dark/30 border-y border-green-500/10">
+  <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+    <div class="text-center mb-16">
+      <div class="inline-flex items-center gap-2 px-4 py-1.5 rounded-full bg-green-500/10 border border-green-500/30 text-green-400 text-xs font-bold mb-8 backdrop-blur-sm">
+        <i class="fa-solid fa-government-building"></i> منصة موحدة في المملكة
+      </div>
+      <h2 class="text-3xl sm:text-4xl section-title text-white mb-4 arabic-heading">خدمات المنصة الموحدة وأبشر</h2>
+      <p class="text-gray-400 max-w-2xl mx-auto">
+        عبر شركائنا ومتخصصينا، نساعدك في إتمام خدمات منصة <strong class="text-white">أبشر</strong> (أفراد – أعمال – حكومة) وخدمات المنصة الوطنية <strong class="text-white">gov.sa</strong> وإجراءات القطاعات الحكومية المرتبطة بها، دون الحاجة للمراجعة الشخصية في أغلب الحالات.
+      </p>
+    </div>
+
+    <!-- Absher Platforms Info -->
+    <div class="grid grid-cols-1 md:grid-cols-3 gap-6 mb-16">
+      <div class="card p-6">
+        <div class="flex items-start gap-3">
+          <div class="w-12 h-12 rounded-2xl bg-green-500/20 flex items-center justify-center text-green-400 shrink-0"><i class="fa-solid fa-user"></i></div>
+          <div>
+            <h3 class="text-lg font-bold text-white">أبشر أفراد</h3>
+            <p class="text-sm text-gray-400 mt-1">للمواطنين والمقيمين والزوار لخدمات شخصية.</p>
+          </div>
+        </div>
+      </div>
+      <div class="card p-6">
+        <div class="flex items-start gap-3">
+          <div class="w-12 h-12 rounded-2xl bg-emerald-500/20 flex items-center justify-center text-emerald-400 shrink-0"><i class="fa-solid fa-building"></i></div>
+          <div>
+            <h3 class="text-lg font-bold text-white">أبشر أعمال</h3>
+            <p class="text-sm text-gray-400 mt-1">للمنشآت وأصحاب الأعمال لإدارة العمالة والتأشيرات.</p>
+          </div>
+        </div>
+      </div>
+      <div class="card p-6">
+        <div class="flex items-start gap-3">
+          <div class="w-12 h-12 rounded-2xl bg-amber-500/20 flex items-center justify-center text-amber-400 shrink-0"><i class="fa-solid fa-sitemap"></i></div>
+          <div>
+            <h3 class="text-lg font-bold text-white">المنصة الوطنية gov.sa</h3>
+            <p class="text-sm text-gray-400 mt-1">المرجع الوطني الموحد لجميع الخدمات الحكومية الرقمية.</p>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
+      <!-- الأحوال المدنية -->
+      <div class="card">
+        <div class="p-6">
+          <span class="badge-gov mb-3 block">أبشر أفراد</span>
+          <div class="w-14 h-14 rounded-2xl bg-green-500/20 flex items-center justify-center text-green-400 mb-5"><i class="fa-solid fa-id-card text-2xl"></i></div>
+          <h3 class="text-xl font-bold text-white mb-2">الأحوال المدنية</h3>
+          <p class="text-sm text-gray-400 mb-4">إصدار وتجديد بطاقة الهوية الوطنية، تحديث البيانات، إصدار شهادات الميلاد والوفاة، طلب سجل الأسرة، وتعديل الحالة الاجتماعية.</p>
+          <ul class="text-xs text-gray-500 space-y-1">
+            <li>· إصدار وتجديد الهوية الوطنية</li>
+            <li>• تحديث البيانات الشخصية</li>
+            <li>· شهادات الميلاد والوفاة</li>
+            <li>• طلب سجل الأسرة</li>
+          </ul>
+        </div>
+      </div>
+      <!-- الجوازات -->
+      <div class="card">
+        <div class="p-6">
+          <span class="badge-gov mb-3 block">أبشر أفراد</span>
+          <div class="w-14 h-14 rounded-2xl bg-emerald-500/20 flex items-center justify-center text-emerald-400 mb-5"><i class="fa-solid fa-passport text-2xl"></i></div>
+          <h3 class="text-xl font-bold text-white mb-2">الجوازات والإقامة</h3>
+          <p class="text-sm text-gray-400 mb-4">تجديد جواز السفر، إصدار وتجديد الإقامة، تأشيرات الخروج والعودة والخروج النهائي، إضافة تابعين، ونقل المعلومات.</p>
+          <ul class="text-xs text-gray-500 space-y-1">
+            <li>· تجديد الجواز والإقامة</li>
+            <li>• تأشيرات الخروج والعودة</li>
+            <li>· إضافة وتعديل التابعين</li>
+            <li>• الاستعلام عن صلاحية الإقامة</li>
+          </ul>
+        </div>
+      </div>
+      <!-- المرور -->
+      <div class="card">
+        <div class="p-6">
+          <span class="badge-gov mb-3 block">أبشر أفراد</span>
+          <div class="w-14 h-14 rounded-2xl bg-amber-500/20 flex items-center justify-center text-amber-400 mb-5"><i class="fa-solid fa-car text-2xl"></i></div>
+          <h3 class="text-xl font-bold text-white mb-2">المرور والمركبات</h3>
+          <p class="text-sm text-gray-400 mb-4">تجديد رخصة القيادة والاستمارة، الاستعلام عن المخالفات المرورية وسدادها، نقل ملكية المركبات، وإصدار تفويض القيادة.</p>
+          <ul class="text-xs text-gray-500 space-y-1">
+            <li>· تجديد رخصة القيادة والاستمارة</li>
+            <li>• الاستعلام عن المخالفات وسدادها</li>
+            <li>· نقل ملكية المركبات</li>
+            <li>• تفويض قيادة المركبة</li>
+          </ul>
+        </div>
+      </div>
+      <!-- التوكيلات -->
+      <div class="card">
+        <div class="p-6">
+          <span class="badge-gov mb-3 block">أبشر أفراد</span>
+          <div class="w-14 h-14 rounded-2xl bg-purple-500/20 flex items-center justify-center text-purple-400 mb-5"><i class="fa-solid fa-file-signature text-2xl"></i></div>
+          <h3 class="text-xl font-bold text-white mb-2">التوكيلات الإلكترونية</h3>
+          <p class="text-sm text-gray-400 mb-4">إصدار توكيل إلكتروني لصالح شخص أو منشأة دون الحاجة لمراجعة كاتب العدل، وإدارة التوكيلات الصادرة والواردة.</p>
+          <ul class="text-xs text-gray-500 space-y-1">
+            <li>· إصدار توكيل إلكتروني</li>
+            <li>• إدارة التوكيلات الصادرة والواردة</li>
+            <li>· إلغاء وتعديل التوكيل</li>
+          </ul>
+        </div>
+      </div>
+      <!-- أبشر أعمال -->
+      <div class="card">
+        <div class="p-6">
+          <span class="badge-gov mb-3 block">أبشر أعمال</span>
+          <div class="w-14 h-14 rounded-2xl bg-indigo-500/20 flex items-center justify-center text-indigo-400 mb-5"><i class="fa-solid fa-users text-2xl"></i></div>
+          <h3 class="text-xl font-bold text-white mb-2">أبشر أعمال (المنشآت)</h3>
+          <p class="text-sm text-gray-400 mb-4">إصدار وتجديد إقامات العاملين، تأشيرات العمل والخروج والعودة، نقل الخدمات، وتعديل مهن العاملين بالمنشآت الفردية.</p>
+          <ul class="text-xs text-gray-500 space-y-1">
+            <li>· إصدار وتجديد إقامات الموظفين</li>
+            <li>• تأشيرات العمل والعمالة</li>
+            <li>· نقل الخدمات وتعديل المهن</li>
+            <li>• إدارة مستخدمي المنشأة</li>
+          </ul>
+        </div>
+      </div>
+      <!-- المنصة الوطنية -->
+      <div class="card">
+        <div class="p-6">
+          <span class="badge-gov mb-3 block">gov.sa</span>
+          <div class="w-14 h-14 rounded-2xl bg-rose-500/20 flex items-center justify-center text-rose-400 mb-5"><i class="fa-solid fa-globe text-2xl"></i></div>
+          <h3 class="text-xl font-bold text-white mb-2">المنصة الوطنية الموحدة</h3>
+          <p class="text-sm text-gray-400 mb-4">البحث عن جميع الخدمات الحكومية الرقمية في جهة واحدة، بما في ذلك البلديات، التعليم، الضمان، الصحة، وغيرها من قطاعات الدولة.</p>
+          <ul class="text-xs text-gray-500 space-y-1">
+            <li>· الوصول الموحد للخدمات الحكومية</li>
+            <li>• خدمات البلديات والإسكان</li>
+            <li>· خدمات الضمان والتأمينات</li>
+            <li>• خدمات الصحة والتعليم</li>
+          </ul>
+        </div>
+      </div>
+    </div>
+
+    <div class="mt-16 bg-green-500/10 rounded-2xl p-8 sm:p-12 border border-green-500/20 text-center">
+      <h3 class="text-2xl font-bold text-white mb-4">هل تحتاج مساعدة في خدمة حكومية غير المذكورة أعلاه؟</h3>
+      <p class="text-gray-400 max-w-xl mx-auto mb-8">منصة أبشر تقدم أكثر من 460 خدمة إلكترونية عبر منصاتها الثلاث (أفراد – أعمال – حكومة). إذا لم تجد الخدمة التي تحتاجها، راسلنا وسنساعدك في تحديد القناة الصحيحة وإتمام الطلب.</p>
+      <a href="#order" class="btn-primary text-lg px-8 py-4">اطلب مساعدة في خدمة حكومية</a>
+    </div>
+  </div>
+</section>
+
+<!-- How it works -->
+<section id="how" class="py-24 relative">
+  <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+    <div class="text-center mb-16">
+      <h2 class="text-3xl sm:text-4xl section-title text-white mb-4 arabic-heading">كيف تعمل الخدمة؟</h2>
+      <p class="text-gray-400">ثلاث خطوات بسيطة لتصل الخدمة إلى باب منزلك أو تُنجز إلكترونياً.</p>
+    </div>
+    <div class="grid grid-cols-1 md:grid-cols-3 gap-8">
+      <div class="text-center p-6 rounded-2xl bg-green-500/10 border border-green-500/20">
+        <div class="w-14 h-14 rounded-full bg-green-500 text-white flex items-center justify-center mx-auto mb-5 text-xl font-bold">1</div>
+        <h3 class="text-lg font-bold text-white mb-3">اختر الخدمة</h3>
+        <p class="text-sm text-gray-400">تصفح الخدمات العامة أو خدمات منصة أبشر والحكومة الرقمية واختر ما يناسبك.</p>
+      </div>
+      <div class="text-center p-6 rounded-2xl bg-green-500/10 border border-green-500/20">
+        <div class="w-14 h-14 rounded-full bg-green-500 text-white flex items-center justify-center mx-auto mb-5 text-xl font-bold">2</div>
+        <h3 class="text-lg font-bold text-white mb-3">حدد التفاصيل والموعد</h3>
+        <p class="text-sm text-gray-400">أدخل بياناتك، المدينة، التاريخ والوقت المناسبين لك، ونوع المعاملة التي تحتاجها.</p>
+      </div>
+      <div class="text-center p-6 rounded-2xl bg-green-500/10 border border-green-500/20">
+        <div class="w-14 h-14 rounded-full bg-green-500 text-white flex items-center justify-center mx-auto mb-5 text-xl font-bold">3</div>
+        <h3 class="text-lg font-bold text-white mb-3">تأكيد وتنفيذ</h3>
+        <p class="text-sm text-gray-400">تتواصل معك الفرقة المختصة أو فريق الدعم لإتمام الخدمة في الوقت المحدد.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- Order form -->
+<section id="order" class="py-24 relative">
+  <div class="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8">
+    <div class="text-center mb-12">
+      <h2 class="text-3xl sm:text-4xl section-title text-white mb-4 arabic-heading">اطلب خدمتك الآن</h2>
+      <p class="text-gray-400">املأ النموذج أدناه وسنتواصل معك خلال أقرب وقت لتأكيد طلبك وإتمام الخدمة.</p>
+    </div>
+    <div class="glass rounded-2xl p-8 sm:p-12 border border-green-500/20 shadow-2xl">
+      <form id="orderForm" class="space-y-6" onsubmit="handleOrder(event)">
+        <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+          <div>
+            <label class="block text-sm font-bold text-gray-300 mb-1.5">الاسم الكامل</label>
+            <input type="text" name="name" required class="w-full px-4 py-3 rounded-xl border border-green-500/30 bg-green-dark/20 text-white focus:ring-2 focus:ring-gold focus:border-gold outline-none transition" placeholder="مثل: أحمد محمد السهلي">
+          </div>
+          <div>
+            <label class="block text-sm font-bold text-gray-300 mb-1.5">رقم الجوال</label>
+            <input type="tel" name="phone" required class="w-full px-4 py-3 rounded-xl border border-green-500/30 bg-green-dark/20 text-white focus:ring-2 focus:ring-gold focus:border-gold outline-none transition" placeholder="+966 5xxxxxxxx">
+          </div>
+        </div>
+        <div>
+          <label class="block text-sm font-bold text-gray-300 mb-1.5">البريد الإلكتروني (اختياري)</label>
+          <input type="email" name="email" class="w-full px-4 py-3 rounded-xl border border-green-500/30 bg-green-dark/20 text-white focus:ring-2 focus:ring-gold focus:border-gold outline-none transition" placeholder="example@email.com">
+        </div>
+        <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+          <div>
+            <label class="block text-sm font-bold text-gray-300 mb-1.5">نوع الخدمة</label>
+            <select name="service_type" required class="w-full px-4 py-3 rounded-xl border border-green-500/30 bg-green-dark/20 text-white focus:ring-2 focus:ring-gold focus:border-gold outline-none transition">
+              <option value="">اختر الخدمة</option>
+              <optgroup label="الخدمات العامة">
+                <option>تنظيف المنازل والمكاتب</option>
+                <option>صيانة المنازل (كهرباء، سباكة، تكييف)</option>
+                <option>نقل العفش والأثاث</option>
+                <option>مكافحة الحشرات والقوارض</option>
+                <option>دفع الفواتير الحكومية</option>
+                <option>حجوزات وخدمات إلكترونية</option>
+              </optgroup>
+              <optgroup label="خدمات منصة أبشر والحكومة">
+                <option>الأحوال المدنية (هوية، سجل مدني، شهادات)</option>
+                <option>الجوازات والإقامة (تجديد، تأشيرات خروج وعودة)</option>
+                <option>المرور (رخصة قيادة، استمارة، مخالفات، نقل ملكية)</option>
+                <option>التوكيلات الإلكترونية</option>
+                <option>أبشر أعمال (إقامات عمال، تأشيرات عمل، نقل خدمات)</option>
+                <option>المنصة الوطنية gov.sa (خدمات حكومية أخرى)</option>
+              </optgroup>
+            </select>
+          </div>
+          <div>
+            <label class="block text-sm font-bold text-gray-300 mb-1.5">المدينة</label>
+            <select name="city" required class="w-full px-4 py-3 rounded-xl border border-green-500/30 bg-green-dark/20 text-white focus:ring-2 focus:ring-gold focus:border-gold outline-none transition">
+              <option value="">اختر المدينة</option>
+              <option>الرياض</option>
+              <option>جدة</option>
+              <option>الدمام</option>
+              <option>مكة المكرمة</option>
+              <option>المدينة المنورة</option>
+              <option>الطائف</option>
+              <option>أبها</option>
+              <option>تبوك</option>
+              <option>أخرى</option>
+            </select>
+          </div>
+        </div>
+        <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+          <div>
+            <label class="block text-sm font-bold text-gray-300 mb-1.5">التاريخ المفضل</label>
+            <input type="date" name="date" required class="w-full px-4 py-3 rounded-xl border border-green-500/30 bg-green-dark/20 text-white focus:ring-2 focus:ring-gold focus:border-gold outline-none transition">
+          </div>
+          <div>
+            <label class="block text-sm font-bold text-gray-300 mb-1.5">الوقت المفضل</label>
+            <input type="time" name="time" required class="w-full px-4 py-3 rounded-xl border border-green-500/30 bg-green-dark/20 text-white focus:ring-2 focus:ring-gold focus:border-gold outline-none transition">
+          </div>
+        </div>
+        <div>
+          <label class="block text-sm font-bold text-gray-300 mb-1.5">تفاصيل الطلب</label>
+          <textarea name="message" rows="4" required class="w-full px-4 py-3 rounded-xl border border-green-500/30 bg-green-dark/20 text-white focus:ring-2 focus:ring-gold focus:border-gold outline-none transition" placeholder="أضف أي تفاصيل تساعدنا في تنفيذ الخدمة بشكل أفضل (مثل رقم الإقامة، رقم اللوحة، نوع الوثيقة المطلوبة...)..."></textarea>
+        </div>
+        <button type="submit" class="btn-primary w-full py-4 text-lg">إرسال الطلب <i class="fa-solid fa-paper-plane ml-2"></i></button>
+      </form>
+    </div>
+    <p class="text-center text-gray-500 text-sm mt-6">ملاحظة: نحن منصة مساعدة بين العملاء ومقدمي الخدمات، وليست المنصة الحكومية الرسمية. الخدمات الحكومية تُنفَّذ عبر المنصات الرسمية مثل أبشر (absher.sa) والمنصة الوطنية (gov.sa).</p>
+  </div>
+</section>
+
+<!-- About -->
+<section id="about" class="py-24 relative bg-green-dark/40 border-y border-green-500/10">
+  <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+    <div class="grid lg:grid-cols-2 gap-12 items-center">
+      <div>
+        <h2 class="text-3xl font-extrabold text-white mb-6 arabic-heading">لماذا تختار منصة الخدمات السعودية؟</h2>
+        <ul class="space-y-4 text-gray-400">
+          <li class="flex items-start gap-3"><i class="fa-solid fa-check text-green-400 mt-1"></i><span>تغطية شاملة للخدمات العامة وخدمات منصة أبشر والحكومة الرقمية في جميع مناطق المملكة.</span></li>
+          <li class="flex items-start gap-3"><i class="fa-solid fa-check text-green-400 mt-1"></i><span>فنيين ومتخصصين معتمدين في كل فئة خدمة.</span></li>
+          <li class="flex items-start gap-3"><i class="fa-solid fa-check text-green-400 mt-1"></i><span>أسعار transparant وبدون تكاليف مخفية.</span></li>
+          <li class="flex items-start gap-3"><i class="fa-solid fa-check text-green-400 mt-1"></i><span>دعم فني متاح لمساعدتك قبل وأثناء وبعد تنفيذ الخدمة.</span></li>
+        </ul>
+      </div>
+      <div class="hidden lg:block">
+        <div class="relative rounded-2xl overflow-hidden shadow-2xl border border-green-500/20">
+          <img src="https://images.unsplash.com/photo-1581539231347-a9ade045546c?w=800&q=80" alt="فريق العمل" class="w-full h-80 object-cover opacity-80">
+          <div class="absolute inset-0 bg-gradient-to-t from-green-dark via-transparent to-transparent"></div>
+          <div class="absolute bottom-0 left-0 p-6 text-white">
+            <h3 class="text-xl font-bold">جودة مضمونة</h3>
+            <p class="text-sm opacity-90">خدمات تُنفذ بمعايير عالية وشفافية كاملة.</p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- Contact -->
+<section id="contact" class="py-24 relative bg-green-dark border-t border-green-500/20">
+  <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+    <div class="grid md:grid-cols-2 gap-12 items-center">
+      <div>
+        <h2 class="text-3xl sm:text-4xl font-extrabold text-white mb-6 arabic-heading">تواصل معنا</h2>
+        <p class="text-green-300 mb-8">هل لديك استفسار أو تحتاج مساعدة في اختيار الخدمة؟ نحن نرحب بتواصلك في أي وقت.</p>
+        <div class="space-y-5">
+          <div class="flex items-start gap-4">
+            <div class="w-10 h-10 rounded-full bg-green-500/20 flex items-center justify-center shrink-0 border border-green-500/30"><i class="fa-solid fa-phone text-green-400"></i></div>
+            <div>
+              <div class="text-sm text-green-300">الاتصال المباشر</div>
+              <div class="text-lg font-semibold text-white">0548386856</div>
+            </div>
+          </div>
+          <div class="flex items-start gap-4">
+            <div class="w-10 h-10 rounded-full bg-green-500/20 flex items-center justify-center shrink-0 border border-green-500/30"><i class="fa-solid fa-envelope text-green-400"></i></div>
+            <div>
+              <div class="text-sm text-green-300">البريد الإلكتروني</div>
+              <div class="text-lg font-semibold text-white">mj.elbarbary@gmail.com</div>
+            </div>
+          </div>
+          <div class="flex items-start gap-4">
+            <div class="w-10 h-10 rounded-full bg-green-500/20 flex items-center justify-center shrink-0 border border-green-500/30"><i class="fa-solid fa-location-dot text-green-400"></i></div>
+            <div>
+              <div class="text-sm text-green-300">المقر الرئيسي</div>
+              <div class="text-lg font-semibold text-white">منطقة عسير، المملكة العربية السعودية</div>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="rounded-2xl bg-green-500/10 p-8 border border-green-500/20">
+        <div class="flex items-center gap-3 mb-6 text-green-300 font-semibold"><i class="fa-solid fa-clock"></i> ساعات العمل</div>
+        <div class="space-y-3 text-sm text-green-300">
+          <div class="flex justify-between"><span>السبت - الخميس</span><span>08:00 صباحاً - 08:00 مساءً</span></div>
+          <div class="flex justify-between"><span>الجمعة</span><span>04:00 مساءً - 08:00 مساءً</span></div>
+        </div>
+        <div class="mt-8 pt-6 border-t border-green-500/20">
+          <a href="https://wa.me/Eng_abokian" class="inline-flex items-center gap-2 px-5 py-3 rounded-xl bg-emerald-500 text-white font-bold hover:bg-emerald-600 transition">
+            <i class="fa-brands fa-whatsapp"></i> تواصل عبر واتساب: Eng_abokian
+          </a>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- Footer -->
+<footer class="bg-green-dark/90 text-gray-400 py-12 border-t border-green-500/20 backdrop-blur-md">
+  <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+    <div class="flex flex-col md:flex-row justify-between items-center gap-6">
+      <div class="flex items-center gap-3">
+        <div class="w-9 h-9 rounded-xl bg-gradient-to-br from-green-400 to-emerald-600 flex items-center justify-center text-dark shadow-lg ring-2 ring-gold/30"><i class="fa-solid fa-cloud text-sm"></i></div>
+        <span class="font-bold text-white arabic-heading">منصة الخدمات السعودية</span>
+      </div>
+      <p class="text-sm">جميع الحقوق محفوظة © 2026 منصة الخدمات السعودية — المملكة العربية السعودية</p>
+      <div class="flex items-center gap-4 text-sm">
+        <a href="#" class="hover:text-white transition">سياسة الخصوصية</a>
+        <a href="#" class="hover:text-white transition">شروط الاستخدام</a>
+        <a href="https://www.absher.sa" target="_blank" rel="noopener" class="hover:text-gold-400 transition">منصة أبشر الرسمية</a>
+      </div>
+    </div>
+  </div>
+</footer>
+
+<!-- Toast -->
+<div id="toast" class="toast hidden">
+  <div class="bg-green-900/95 text-white border border-green-500/30 rounded-2xl px-5 py-4 shadow-2xl flex items-start gap-3 backdrop-blur-md">
+    <div class="mt-0.5"><i class="fa-solid fa-check-circle text-green-400 text-lg"></i></div>
+    <div>
+      <h4 class="font-bold text-sm">تم إرسال الطلب بنجاح</h4>
+      <p class="text-xs text-green-200 mt-0.5">سيتواصل معك فريق الدعم في أقرب وقت لتأكيد الموعد والخدمة.</p>
+    </div>
+  </div>
+</div>
+
+<script>
+  // Smooth scroll for nav links
+  document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+    anchor.addEventListener('click', function (e) {
+      e.preventDefault();
+      const target = document.querySelector(this.getAttribute('href'));
+      if (target) {
+        const navHeight = 80;
+        window.scrollTo({
+          top: target.offsetTop - navHeight,
+          behavior: 'smooth'
+        });
+        document.getElementById('mobile-menu')?.classList.add('hidden');
+      }
+    });
+  });
+
+  // Order form handler with EmailJS
+  function handleOrder(e) {
+    e.preventDefault();
+    const btn = e.target.querySelector('button[type="submit"]');
+    const originalText = btn.innerHTML;
+    btn.innerHTML = '<i class="fa-solid fa-circle-notch fa-spin mr-2"></i> جاري الإرسال...';
+    btn.disabled = true;
+
+    // جمع بيانات النموذج
+    const formData = new FormData(e.target);
+    const templateParams = {
+      from_name: formData.get('name') || 'غير محدد',
+      from_email: formData.get('email') || 'غير محدد',
+      phone: formData.get('phone') || 'غير محدد',
+      service_type: formData.get('service_type') || 'غير محدد',
+      city: formData.get('city') || 'غير محدد',
+      date: formData.get('date') || 'غير محدد',
+      time: formData.get('time') || 'غير محدد',
+      message: formData.get('message') || 'بدون تفاصيل',
+      reply_to: formData.get('email') || 'غير محدد'
+    };
+
+    // TODO: استبدل القيم التالية بمعرفات حسابك في EmailJS بعد إنشاء حساب مجاني في https://www.emailjs.com/
+    const SERVICE_ID = 'service_jujondd';     // كود الخدمة الخاص بك
+    const TEMPLATE_ID = 'template_75f47mt';   // كود القالب الخاص بك
+    const PUBLIC_KEY = 'n7sNqOIUb3InAC98N';   // المفتاح العام الخاص بك
+
+    emailjs.send(SERVICE_ID, TEMPLATE_ID, templateParams, PUBLIC_KEY)
+      .then(() => {
+        btn.innerHTML = originalText;
+        btn.disabled = false;
+        e.target.reset();
+        const toast = document.getElementById('toast');
+        toast.querySelector('h4').textContent = 'تم إرسال الطلب بنجاح';
+        toast.querySelector('p').textContent = 'سيصل الطلب إلى بريدك الإلكتروني mj.elbarbary@gmail.com وسيتواصل معك فريق الدعم في أقرب وقت.';
+        toast.classList.remove('hidden');
+        setTimeout(() => { toast.classList.add('hidden'); }, 7000);
+      }, (error) => {
+        btn.innerHTML = originalText;
+        btn.disabled = false;
+        const toast = document.getElementById('toast');
+        toast.querySelector('h4').textContent = 'فشل الإرسال';
+        toast.querySelector('p').textContent = 'يرجى المحاولة مرة أخرى أو التواصل عبر واتساب.';
+        toast.classList.remove('hidden');
+        setTimeout(() => { toast.classList.add('hidden'); }, 7000);
+        console.error('EmailJS error:', error);
+      });
+  }
+
+  // Close toast when clicking outside
+  document.getElementById('toast').addEventListener('click', () => {
+    document.getElementById('toast').classList.add('hidden');
+  });
+</script>
+</body>
+</html>
